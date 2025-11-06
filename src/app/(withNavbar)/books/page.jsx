@@ -84,7 +84,7 @@ export default function BooksList() {
       <Image
         src={
           book?.image
-            ? `http://localhost:8080${book?.image}`
+            ? `${process.env.NEXT_PUBLIC_API_URL}${book?.image}`
             : "/default-book.png"
         }
         alt={book?.title || "Book image"}
