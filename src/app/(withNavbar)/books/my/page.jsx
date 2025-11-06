@@ -85,7 +85,7 @@ export default function MyBooks() {
           {books?.map((book) => (
             <div key={book?._id} className="bg-white shadow p-4 rounded-lg">
               <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL}/uploads/${book?.image}`}
+                src={`${process.env.NEXT_PUBLIC_API_URL}${book?.image}`}
                 alt={book?.title}
                 width={300}
                 height={200}
