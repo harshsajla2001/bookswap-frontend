@@ -5,7 +5,8 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "bookswap-mu.vercel.app",
-        pathname: "/uploads/**",
+        port: "",
+        // pathname: "/uploads/**",
       },
     ],
   },
