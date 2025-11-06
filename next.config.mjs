@@ -4,6 +4,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
         hostname: "bookswap-mu.vercel.app",
         pathname: "/uploads/**",
       }

@@ -46,27 +46,37 @@ export default function MyBooks() {
   if (loading) return <Loader />;
 
 
-  const handleCreateBook = async (e) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
-      formData.append("title", newBook.title);
-      formData.append("author", newBook.author);
-      formData.append("condition", newBook.condition);
-      formData.append("image", newBook.image);
+ const handleCreateBook = async (e) => {
+  e.preventDefault();
 
-      await API.post("/books", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+  try {
+    const formData = new FormData();
+    formData.append("title", newBook.title);
+    formData.append("author", newBook.author);
+    formData.append("condition", newBook.condition);
 
-      setShowModal(false);
-      setNewBook({ title: "", author: "", condition: "", image: null });
-      fetchMyBooks();
-    } catch (err) {
-      console.error(err);
-      alert("Error creating book");
+    if (newBook.image) {
+      formData.append("image", newBook.image); // ✅ this triggers Cloudinary upload
     }
-  };
+
+    console.log("🌟 Creating book with data:",  formData)
+
+    const response = await API.post("/books", formData);
+
+    console.log("✅ Book created:", response.data);
+
+    setShowModal(false);
+    setNewBook({ title: "", author: "", condition: "", image: null });
+
+    // ✅ Refresh all books
+    fetchMyBooks();
+
+  } catch (err) {
+    console.error("❌ Error creating book", err.response?.data || err.message);
+    alert(err.response?.data?.error || "Error creating book");
+  }
+};
+
 
   return (
     <ProtectedRoute>
@@ -85,8 +95,8 @@ export default function MyBooks() {
           {books?.map((book) => (
             <div key={book?._id} className="bg-white shadow p-4 rounded-lg">
               <Image
-                src={`${process.env.NEXT_PUBLIC_API_URL}${book?.image}`}
-                alt={book?.title}
+                src={book?.image || "/default-book.png"}
+                alt={book?.title || "Book image"}
                 width={300}
                 height={200}
                 className="w-full h-50 object-cover rounded-md"

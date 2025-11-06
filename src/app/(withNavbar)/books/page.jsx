@@ -16,7 +16,7 @@ export default function BooksList() {
     condition: "",
     image: null,
   });
-  const [requestedBooks, setRequestedBooks] = useState([]); 
+  const [requestedBooks, setRequestedBooks] = useState([]);
 
   const fetchBooks = async () => {
     setLoading(true);
@@ -78,49 +78,48 @@ export default function BooksList() {
 
         </div>
 
-       <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-  {books?.map((book) => (
-    <div key={book?._id} className="bg-white shadow p-4 rounded-lg">
-      <Image
-        src={
-          book?.image
-            ? `${process.env.NEXT_PUBLIC_API_URL}${book?.image}`
-            : "/default-book.png"
-        }
-        alt={book?.title || "Book image"}
-        width={300}
-        height={200}
-        className="w-full h-50 object-cover rounded-md"
-      />
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+          {books?.map((book) => (
+            <div key={book?._id} className="bg-white shadow p-4 rounded-lg">
+              <Image
+                src={
+                  book?.image
+                    ? `${book?.image}`
+                    : "/default-book.png"
+                }
+                alt={book?.title || "Book image"}
+                width={300}
+                height={200}
+                className="w-full h-50 object-cover rounded-md"
+              />
 
-      <h2 className="text-lg font-semibold mt-3">{book?.title}</h2>
-      <p className="text-gray-600">{book?.author}</p>
-      <p className="text-sm text-gray-500">Condition: {book?.condition}</p>
+              <h2 className="text-lg font-semibold mt-3">{book?.title}</h2>
+              <p className="text-gray-600">{book?.author}</p>
+              <p className="text-sm text-gray-500">Condition: {book?.condition}</p>
 
-      {/* ✅ Show Book Owner */}
-      <p className="text-sm text-gray-700 mt-2">
-        <span className="font-semibold">Owner:</span> {book?.owner?.name}
-      </p>
-      <p className="text-xs text-gray-500">
-        {book?.owner?.email}
-      </p>
+              {/* ✅ Show Book Owner */}
+              <p className="text-sm text-gray-700 mt-2">
+                <span className="font-semibold">Owner:</span> {book?.owner?.name}
+              </p>
+              <p className="text-xs text-gray-500">
+                {book?.owner?.email}
+              </p>
 
-      <button
-        onClick={() => handleRequestBook(book?._id)}
-        disabled={requestedBooks.includes(book?._id)}
-        className={`w-full py-2 mt-3 rounded-xl font-medium transition ${
-          requestedBooks.includes(book?._id)
-            ? "bg-gray-400 text-white cursor-not-allowed"
-            : "bg-blue-600 text-white hover:bg-blue-700"
-        }`}
-      >
-        {requestedBooks.includes(book?._id)
-          ? "Requested"
-          : "Request Book"}
-      </button>
-    </div>
-  ))}
-</div>
+              <button
+                onClick={() => handleRequestBook(book?._id)}
+                disabled={requestedBooks.includes(book?._id)}
+                className={`w-full py-2 mt-3 rounded-xl font-medium transition ${requestedBooks.includes(book?._id)
+                    ? "bg-gray-400 text-white cursor-not-allowed"
+                    : "bg-blue-600 text-white hover:bg-blue-700"
+                  }`}
+              >
+                {requestedBooks.includes(book?._id)
+                  ? "Requested"
+                  : "Request Book"}
+              </button>
+            </div>
+          ))}
+        </div>
 
 
         {/* Create Book Modal */}
